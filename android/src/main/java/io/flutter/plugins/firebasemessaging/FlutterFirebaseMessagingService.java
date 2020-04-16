@@ -19,15 +19,19 @@ import android.os.Handler;
 import android.os.Handler;
 import android.os.Process;
 import android.util.Log;
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.view.FlutterCallbackInformation;
 import io.flutter.view.FlutterMain;
 import io.flutter.view.FlutterNativeView;
 import io.flutter.view.FlutterRunArguments;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,8 +41,11 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.nio.channels.Channel;
+
 import androidx.core.app.NotificationCompat;
+
 import io.flutter.plugins.firebasemessaging.R;
+
 import android.os.Bundle;
 import android.media.AudioAttributes;
 import android.content.ContentResolver;
@@ -64,7 +71,9 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
     // TODO(kroikie): make isIsolateRunning per-instance, not static.
     private static AtomicBoolean isIsolateRunning = new AtomicBoolean(false);
 
-    /** Background Dart execution context. */
+    /**
+     * Background Dart execution context.
+     */
     private static FlutterNativeView backgroundFlutterView;
 
     private static MethodChannel backgroundChannel;
@@ -81,6 +90,8 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
     private static Context backgroundContext;
 
     private static final String CLICK_ACTION_VALUE = "FLUTTER_NOTIFICATION_CLICK";
+    public static final String CLICK_ACTION_VALUE_ANSWER = "FLUTTER_NOTIFICATION_CLICK_ANSWER";
+    public static final String CLICK_ACTION_VALUE_DECLINE = "FLUTTER_NOTIFICATION_CLICK_DECLINE";
 
     @Override
     public void onCreate() {
@@ -103,21 +114,31 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
     @Override
-    public void onMessageReceived(final RemoteMessage remoteMessage) {
+    public void onMessageReceived(RemoteMessage remoteMessage) {
         // If application is running in the foreground use local broadcast to handle message.
         // Otherwise use the background isolate to handle message.
-        Log.e(TAG,remoteMessage.getData().toString());
+        Log.e(TAG, remoteMessage.getData().toString());
 
         if (isApplicationForeground(this)) {
-            Log.e(TAG,"foreground");
+            Log.e(TAG, "foreground");
             Intent intent = new Intent(ACTION_REMOTE_MESSAGE);
             intent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+            if (!remoteMessage.getData().containsKey("event")) {
+                return;
+            }
+
+            switch (remoteMessage.getData().get("event")) {
+                case "call_missed":
+                    sendDefaultNotification(this, remoteMessage);
+                    break;
+            }
         } else {
             // If background isolate is not running yet, put message in queue and it will be handled
             // when the isolate starts.
-            try{
-                Log.e(TAG,"background");
+            try {
+                Log.e(TAG, "background");
                 NotificationManager notificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -125,21 +146,31 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                 onMessageIntent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(onMessageIntent);
 
-                if(!remoteMessage.getData().containsKey("event")){
+                if (!remoteMessage.getData().containsKey("event")) {
                     return;
                 }
 
-                Intent intent = new Intent(this,getMainActivityClass(this));
+                Intent intent = new Intent(this, getMainActivityClass(this));
                 intent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
                 intent.setAction(CLICK_ACTION_VALUE);
-                PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                switch(remoteMessage.getData().get("event")){
+                switch (remoteMessage.getData().get("event")) {
                     case "call_cancel":
                         break;
                     case "call":
                         Intent wakeUpIntent = new Intent(ACTION_WAKE_UP_SCREEN);
                         LocalBroadcastManager.getInstance(this).sendBroadcast(wakeUpIntent);
+
+                        Intent answerCallIntent = new Intent(this, getMainActivityClass(this));
+                        answerCallIntent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
+                        answerCallIntent.setAction(CLICK_ACTION_VALUE_ANSWER);
+                        PendingIntent acceptCallPendingIntent = PendingIntent.getActivity(this, 0, answerCallIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                        Intent declineCallIntent = new Intent(this, getMainActivityClass(this));
+                        declineCallIntent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
+                        declineCallIntent.setAction(CLICK_ACTION_VALUE_DECLINE);
+                        PendingIntent declineCallPendingIntent = PendingIntent.getActivity(this, 0, declineCallIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             NotificationChannel socialDoctorCallChannel = new NotificationChannel(
@@ -168,8 +199,8 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                                 .setCategory(NotificationCompat.CATEGORY_CALL)
                                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
-                                .addAction(R.drawable.accept_call, remoteMessage.getData().get("answer"), pendingIntent)
-                                .addAction(R.drawable.cancel_call, remoteMessage.getData().get("decline"), pendingIntent)
+                                .addAction(R.drawable.accept_call, remoteMessage.getData().get("answer"), acceptCallPendingIntent)
+                                .addAction(R.drawable.cancel_call, remoteMessage.getData().get("decline"), declineCallPendingIntent)
                                 .setFullScreenIntent(pendingIntent, true);
 
                         Notification mNotification = notificationBuilder.build();
@@ -178,61 +209,49 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                         notificationManager.notify(7087, mNotification);
                         break;
                     default:
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            NotificationChannel socialDoctorChannel = new NotificationChannel(
-                                    "social_doctor",
-                                    "social_doctor",
-                                    NotificationManager.IMPORTANCE_HIGH);
-                            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                                    .build();
-                            socialDoctorChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes);
-                            notificationManager.createNotificationChannel(socialDoctorChannel);
-                        }
-
-                        NotificationCompat.Builder defaultNotificationBuilder = new NotificationCompat.Builder(
-                                this,
-                                "social_doctor")
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle(remoteMessage.getData().get("title"))
-                                .setContentText(remoteMessage.getData().get("body"))
-                                .setAutoCancel(true)
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                                .setContentIntent(pendingIntent);
-
-                        notificationManager.notify(0, defaultNotificationBuilder.build());
+                        sendDefaultNotification(this, remoteMessage);
                         break;
                 }
-
-                /*if (!isIsolateRunning.get()) {
-                    backgroundMessageQueue.add(remoteMessage);
-                } else {
-
-
-                    final CountDownLatch latch = new CountDownLatch(1);
-                    new Handler(getMainLooper())
-                            .post(
-                                    new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            executeDartCallbackInBackgroundIsolate(
-                                                    FlutterFirebaseMessagingService.this, remoteMessage, latch);
-                                        }
-                                    });
-                    try {
-                        latch.await();
-                    } catch (InterruptedException ex) {
-                        Log.i(TAG, "Exception waiting to execute Dart callback", ex);
-                    }
-                }*/
-
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void sendDefaultNotification(Context context, RemoteMessage remoteMessage) {
+        Intent intent = new Intent(context, getMainActivityClass(context));
+        intent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
+        intent.setAction(CLICK_ACTION_VALUE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel socialDoctorChannel = new NotificationChannel(
+                    "social_doctor",
+                    "social_doctor",
+                    NotificationManager.IMPORTANCE_HIGH);
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build();
+            socialDoctorChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes);
+            notificationManager.createNotificationChannel(socialDoctorChannel);
+        }
+
+        NotificationCompat.Builder defaultNotificationBuilder = new NotificationCompat.Builder(
+                context,
+                "social_doctor")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(remoteMessage.getData().get("title"))
+                .setContentText(remoteMessage.getData().get("body"))
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify(0, defaultNotificationBuilder.build());
     }
 
     private static Class getMainActivityClass(Context context) {
@@ -251,7 +270,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
      * Called when a new token for the default Firebase project is generated.
      *
      * @param token The token used for sending messages to this application instance. This token is
-     *     the same as the one retrieved by getInstanceId().
+     *              the same as the one retrieved by getInstanceId().
      */
     @Override
     public void onNewToken(String token) {
@@ -265,9 +284,9 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
      * side. Called either by the plugin when the app is starting up or when the app receives a
      * message while it is inactive.
      *
-     * @param context Registrar or FirebaseMessagingService context.
+     * @param context        Registrar or FirebaseMessagingService context.
      * @param callbackHandle Handle used to retrieve the Dart function that sets up background
-     *     handling on the dart side.
+     *                       handling on the dart side.
      */
     public static void startBackgroundIsolate(Context context, long callbackHandle) {
         FlutterMain.ensureInitializationComplete(context, null);
@@ -329,7 +348,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
      * the incoming message. This method is called by the Dart side via `FcmDartService#start`.
      *
      * @param context Registrar context.
-     * @param handle Handle representing the Dart side method that will handle background messages.
+     * @param handle  Handle representing the Dart side method that will handle background messages.
      */
     public static void setBackgroundMessageHandle(Context context, Long handle) {
         backgroundMessageHandle = handle;
@@ -346,9 +365,9 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
      * the Dart side needs to be able to retrieve the setup method. This method is called by the Dart
      * side via `FcmDartService#start`.
      *
-     * @param context Registrar context.
+     * @param context               Registrar context.
      * @param setupBackgroundHandle Handle representing the dart side method that will setup the
-     *     background method channel.
+     *                              background method channel.
      */
     public static void setBackgroundSetupHandle(Context context, long setupBackgroundHandle) {
         // Store background setup handle in shared preferences so it can be retrieved
@@ -379,10 +398,10 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
      * a new background message is received or after background method channel setup for queued
      * messages received during setup.
      *
-     * @param context Application or FirebaseMessagingService context.
+     * @param context       Application or FirebaseMessagingService context.
      * @param remoteMessage Message received from Firebase Cloud Messaging.
-     * @param latch If set will count down when the Dart side message processing is complete. Allowing
-     *     any waiting threads to continue.
+     * @param latch         If set will count down when the Dart side message processing is complete. Allowing
+     *                      any waiting threads to continue.
      */
     private static void executeDartCallbackInBackgroundIsolate(
             Context context, RemoteMessage remoteMessage, final CountDownLatch latch) {
@@ -433,7 +452,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param context FlutterFirebaseMessagingService context.
      * @return True if the application is currently in a state where user interaction is possible,
-     *     false otherwise.
+     * false otherwise.
      */
     // TODO(kroikie): Find a better way to determine application state.
     private static boolean isApplicationForeground(Context context) {

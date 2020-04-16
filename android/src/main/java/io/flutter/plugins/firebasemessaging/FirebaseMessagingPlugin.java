@@ -45,6 +45,7 @@ import android.view.WindowManager;
 import java.util.concurrent.TimeUnit;
 
 import android.os.PowerManager;
+import android.app.NotificationManager;
 
 /**
  * FirebaseMessagingPlugin
@@ -373,41 +374,32 @@ public class FirebaseMessagingPlugin extends BroadcastReceiver
      * @return true if intent contained a message to send.
      */
     private boolean sendMessageFromIntent(String method, Intent intent) {
-    /*Log.e("click action => ", CLICK_ACTION_VALUE);
-    Log.e("intent action => ", intent.getAction());*/
         if (CLICK_ACTION_VALUE.equals(intent.getAction())
+                || intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_ANSWER)
+                || intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_DECLINE)
                 || CLICK_ACTION_VALUE.equals(intent.getStringExtra("click_action"))) {
-      /*Map<String, Object> message = new HashMap<>();
-      Bundle extras = intent.getExtras();
 
-      if (extras == null) {
-        return false;
-      }
-
-      Map<String, Object> notificationMap = new HashMap<>();
-      Map<String, Object> dataMap = new HashMap<>();
-
-      for (String key : extras.keySet()) {
-        Object extra = extras.get(key);
-        Log.e(key,extra.toString());
-        if (extra != null) {
-          dataMap.put(key, extra);
-        }
-      }
-
-      message.put("notification", notificationMap);
-      message.put("data", dataMap);
-
-
-      channel.invokeMethod(method, message);*/
             Log.e(TAG, method);
+
             RemoteMessage message =
                     intent.getParcelableExtra(FlutterFirebaseMessagingService.EXTRA_REMOTE_MESSAGE);
+            if ((intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_ANSWER)
+                    || intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_DECLINE))
+                    && !message.getData().get("MID").contains(intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_ANSWER) ? "answer" : "decline")) {
+                message.getData().put("MID", message.getData().get("MID").concat(intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_ANSWER) ? "_answer" : "_decline"));
+                message.getData().put("notificationAction", intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_ANSWER) ? "answer" : "decline");
+
+                NotificationManager notificationManager =
+                        (NotificationManager) mainActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancel(7087);
+            }
             Log.e("message data", message.getData().toString());
+
             Map<String, Object> content = parseRemoteMessage(message);
             channel.invokeMethod(method, content);
             return true;
         }
+
         return false;
     }
 }

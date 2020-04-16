@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="254137c3-919e-41c2-8b59-6469d2a7c4e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/accept_call.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/cancel_call.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firebase_messaging.iml" beforeDir="false" afterPath="$PROJECT_DIR$/firebase_messaging.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java" afterDir="false" />
     </list>
@@ -53,42 +43,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="178" column="30" lean-forward="true" selection-start-line="178" selection-start-column="30" selection-end-line="178" selection-end-column="30" />
+            <state relative-caret-position="108">
+              <caret line="142" column="93" lean-forward="true" selection-start-line="141" selection-start-column="16" selection-end-line="142" selection-end-column="93" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#15443#15444#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/res/values/colors.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="44" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="846">
-              <caret line="401" column="46" lean-forward="true" selection-start-line="401" selection-start-column="46" selection-end-line="401" selection-end-column="46" />
+            <state relative-caret-position="173">
+              <caret line="379" column="72" lean-forward="true" selection-start-line="379" selection-start-column="72" selection-end-line="379" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -111,6 +82,7 @@
       <find>mNo</find>
       <find>Notification channel</find>
       <find>channel</find>
+      <find>notificationAction</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/main</dir>
@@ -127,8 +99,8 @@
         <option value="$PROJECT_DIR$/src/main/res/drawable/cancel_call.xml" />
         <option value="$PROJECT_DIR$/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/src/main/res/drawable/accept_call.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java" />
       </list>
     </option>
   </component>
@@ -140,7 +112,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="806" />
@@ -151,9 +123,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -244,9 +215,11 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -292,11 +265,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="806" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="806" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.32546496" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.34334764" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
@@ -392,23 +365,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="846">
-          <caret line="401" column="46" lean-forward="true" selection-start-line="401" selection-start-column="46" selection-end-line="401" selection-end-column="46" />
+        <state relative-caret-position="108">
+          <caret line="142" column="93" lean-forward="true" selection-start-line="141" selection-start-column="16" selection-end-line="142" selection-end-column="93" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="178" column="30" lean-forward="true" selection-start-line="178" selection-start-column="30" selection-end-line="178" selection-end-column="30" />
+        <state relative-caret-position="173">
+          <caret line="379" column="72" lean-forward="true" selection-start-line="379" selection-start-column="72" selection-end-line="379" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15443#15444#0" expanded="true" />
           </folding>
         </state>
       </provider>
