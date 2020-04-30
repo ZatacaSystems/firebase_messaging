@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="254137c3-919e-41c2-8b59-6469d2a7c4e8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,8 +56,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="379" column="72" lean-forward="true" selection-start-line="379" selection-start-column="72" selection-end-line="379" selection-end-column="72" />
+            <state relative-caret-position="193">
+              <caret line="396" lean-forward="true" selection-start-line="396" selection-end-line="396" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -112,7 +110,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="806" />
@@ -265,8 +263,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="806" extended-state="1" />
-    <editor active="true" />
+    <frame x="-1" y="23" width="1440" height="806" extended-state="6" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" weight="0.34334764" />
@@ -279,7 +276,7 @@
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="0" sideWeight="0.49946752" weight="0.32953367" />
       <window_info anchor="bottom" id="TODO" order="1" sideWeight="0.49946752" weight="0.32953367" />
-      <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.49946752" weight="0.32953367" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="2" sideWeight="0.49946752" visible="true" weight="0.32913166" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5005325" side_tool="true" weight="0.32953367" />
       <window_info active="true" anchor="bottom" id="Build" order="4" visible="true" weight="0.32953367" />
       <window_info anchor="bottom" id="Find" order="5" />
@@ -377,8 +374,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="379" column="72" lean-forward="true" selection-start-line="379" selection-start-column="72" selection-end-line="379" selection-end-column="72" />
+        <state relative-caret-position="193">
+          <caret line="396" lean-forward="true" selection-start-line="396" selection-end-line="396" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

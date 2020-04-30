@@ -180,11 +180,12 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                             socialDoctorCallChannel.enableLights(true);
                             socialDoctorCallChannel.setShowBadge(false);
                             socialDoctorCallChannel.enableVibration(false);
-                            AudioAttributes audioAttributesCall = new AudioAttributes.Builder()
+                            /*AudioAttributes audioAttributesCall = new AudioAttributes.Builder()
                                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                                     .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                                     .build();
-                            socialDoctorCallChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE), audioAttributesCall);
+                            socialDoctorCallChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE), audioAttributesCall);*/
+                            socialDoctorCallChannel.setSound(null,null);
                             notificationManager.createNotificationChannel(socialDoctorCallChannel);
                         }
 
@@ -198,7 +199,8 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                                 .setPriority(NotificationCompat.PRIORITY_MAX)
                                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                                 .setCategory(NotificationCompat.CATEGORY_CALL)
-                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
+                                //.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
+                                .setSound(null)
                                 .addAction(R.drawable.accept_call, remoteMessage.getData().get("answer"), acceptCallPendingIntent)
                                 .addAction(R.drawable.cancel_call, remoteMessage.getData().get("decline"), declineCallPendingIntent)
                                 .setFullScreenIntent(pendingIntent, true);
