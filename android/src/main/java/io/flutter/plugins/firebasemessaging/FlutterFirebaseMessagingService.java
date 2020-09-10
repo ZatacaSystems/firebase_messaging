@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.nio.channels.Channel;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.core.app.NotificationCompat;
 
@@ -51,6 +52,13 @@ import android.media.AudioAttributes;
 import android.content.ContentResolver;
 import android.graphics.Color;
 import android.app.Notification;
+
+class NotificationID {
+    private final static AtomicInteger c = new AtomicInteger(0);
+    public static int getID() {
+        return c.incrementAndGet();
+    }
+}
 
 public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -255,7 +263,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentIntent(pendingIntent);
 
-        notificationManager.notify(0, defaultNotificationBuilder.build());
+        notificationManager.notify(NotificationID.getID(), defaultNotificationBuilder.build());
     }
 
     private static Class getMainActivityClass(Context context) {
