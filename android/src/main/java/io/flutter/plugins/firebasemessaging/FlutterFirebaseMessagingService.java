@@ -157,6 +157,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
 
                 switch (remoteMessage.getData().get("event")) {
                     case "call_cancel":
+                        notificationManager.cancel(7087);
                         break;
                     case "call":
                         Intent wakeUpIntent = new Intent(ACTION_WAKE_UP_SCREEN);
@@ -179,13 +180,12 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                                     NotificationManager.IMPORTANCE_HIGH);
                             socialDoctorCallChannel.enableLights(true);
                             socialDoctorCallChannel.setShowBadge(false);
-                            socialDoctorCallChannel.enableVibration(false);
-                            /*AudioAttributes audioAttributesCall = new AudioAttributes.Builder()
+                            socialDoctorCallChannel.enableVibration(true);
+                            AudioAttributes audioAttributesCall = new AudioAttributes.Builder()
                                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                                     .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                                     .build();
-                            socialDoctorCallChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE), audioAttributesCall);*/
-                            socialDoctorCallChannel.setSound(null,null);
+                            socialDoctorCallChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE), audioAttributesCall);
                             notificationManager.createNotificationChannel(socialDoctorCallChannel);
                         }
 
@@ -199,8 +199,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                                 .setPriority(NotificationCompat.PRIORITY_MAX)
                                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                                 .setCategory(NotificationCompat.CATEGORY_CALL)
-                                //.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
-                                .setSound(null)
+                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
                                 .addAction(R.drawable.accept_call, remoteMessage.getData().get("answer"), acceptCallPendingIntent)
                                 .addAction(R.drawable.cancel_call, remoteMessage.getData().get("decline"), declineCallPendingIntent)
                                 .setFullScreenIntent(pendingIntent, true);
@@ -234,6 +233,9 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
                     "social_doctor",
                     "social_doctor",
                     NotificationManager.IMPORTANCE_HIGH);
+            socialDoctorChannel.enableLights(true);
+            socialDoctorChannel.setShowBadge(true);
+            socialDoctorChannel.enableVibration(true);
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .setUsage(AudioAttributes.USAGE_NOTIFICATION)
