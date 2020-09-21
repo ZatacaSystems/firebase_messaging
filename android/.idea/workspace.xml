@@ -2,9 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="254137c3-919e-41c2-8b59-6469d2a7c4e8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/firebase_messaging.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/firebase_messaging.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FirebaseMessagingPlugin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/flutter/plugins/firebasemessaging/FlutterFirebaseMessagingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/firebase_messaging.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/firebase_messaging.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +77,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="memory.settings.postsync.last.time.stamp" value="1599748208124" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1600701365507" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -106,5 +116,15 @@
       <are-packages-shown value="true" />
       <is-autoscroll-to-source value="true" />
     </todo-panel>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1232" y="89" key="RollbackChangesDialog" timestamp="1600703246267">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state x="-1232" y="89" key="RollbackChangesDialog/0.23.1440.804/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1600703246267" />
+    <state x="-1110" y="294" key="VCS.ChangelistChooser" timestamp="1600703243069">
+      <screen x="-1920" y="-157" width="1920" height="1057" />
+    </state>
+    <state x="-1110" y="294" key="VCS.ChangelistChooser/0.23.1440.804/-1920.-157.1920.1057@-1920.-157.1920.1057" timestamp="1600703243069" />
   </component>
 </project>
