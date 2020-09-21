@@ -183,6 +183,7 @@ class FirebaseMessaging {
   }
 
   Future<dynamic> _handleMethod(MethodCall call) async {
+    print('${this.runtimeType} -> ${call.method}');
     switch (call.method) {
       case "onToken":
         final String token = call.arguments;

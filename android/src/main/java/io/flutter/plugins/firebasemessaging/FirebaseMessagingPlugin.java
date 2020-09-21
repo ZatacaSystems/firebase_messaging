@@ -379,8 +379,6 @@ public class FirebaseMessagingPlugin extends BroadcastReceiver
                 || intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_DECLINE)
                 || CLICK_ACTION_VALUE.equals(intent.getStringExtra("click_action"))) {
 
-            Log.e(TAG, method);
-
             RemoteMessage message =
                     intent.getParcelableExtra(FlutterFirebaseMessagingService.EXTRA_REMOTE_MESSAGE);
             if ((intent.getAction().equals(FlutterFirebaseMessagingService.CLICK_ACTION_VALUE_ANSWER)
@@ -393,7 +391,10 @@ public class FirebaseMessagingPlugin extends BroadcastReceiver
                         (NotificationManager) mainActivity.getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancel(7087);
             }
-            Log.e("message data", message.getData().toString());
+            
+            if (CLICK_ACTION_VALUE.equals(intent.getAction())){
+                message.getData().put("MID", message.getData().get("MID").concat("_"+method));
+            }
 
             Map<String, Object> content = parseRemoteMessage(message);
             channel.invokeMethod(method, content);
